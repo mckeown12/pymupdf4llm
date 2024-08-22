@@ -451,7 +451,7 @@ def to_markdown(
                 prev_lrect
                 and lrect.y1 - prev_lrect.y1 > lrect.height * 1.5
                 or span0["text"].startswith("[")
-                or span0["text"].startswith(bullet)
+                or any(span0["text"].startswith(x) for x in bullet)
                 or span0["flags"] & 1  # superscript?
             ):
                 out_string += "\n"
@@ -502,7 +502,7 @@ def to_markdown(
                     else:
                         text = f"{hdr_string}{prefix}{s['text'].strip()}{suffix} "
 
-                    if text.startswith(bullet):
+                    if any(text.startswith(x) for x in bullet):
                         text = "-  " + text[1:]
                     out_string += text
             if not code:
